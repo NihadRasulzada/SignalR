@@ -1,8 +1,10 @@
 ﻿$(document).ready(function () {
     const broadcastMessageToAllClientHubMethodCall = "BroadcastMessageToAllClients"; 
     const broadcastMessageToCallerClients = "BroadcastMessageToCallerClients"; 
+    const broadcastMessageToOtherClients = "BroadcastMessageToOtherClients"; 
     const receiveMessageForAllClientClientMethodCall = "ReceiveMessageForAllClient";
     const receiveMessageForCallerClient = "ReceiveMessageForCallerClient";
+    const receiveMessageForOtherClient = "ReceiveMessageForOtherClient";
     const receiveConnectedClientCountAllClientClientMethodCall = "ReceiveConnectedClientCountAllClient";
 
     const connection = new signalR.HubConnectionBuilder()
@@ -29,6 +31,10 @@
         console.log("Called Received message: " + message);
     })
 
+    connection.on(receiveMessageForOtherClient, (message) => {
+        console.log("Other Received message: " + message);
+    })
+
 
     var span_client_count = $("#span-connected-client-count");
     connection.on(receiveConnectedClientCountAllClientClientMethodCall, (count) => {
@@ -47,6 +53,13 @@
         const message = "Caller Salam";
 
         connection.invoke(broadcastMessageToCallerClients, message)
+            .catch(err => console.error("Error sending message: " + err));
+    })
+
+    $("#btn-send-message-other-client").click(function () {
+        const message = "Other Salam";
+
+        connection.invoke(broadcastMessageToOtherClients, message)
             .catch(err => console.error("Error sending message: " + err));
     })
 });

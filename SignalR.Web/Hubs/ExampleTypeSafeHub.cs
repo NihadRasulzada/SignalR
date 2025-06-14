@@ -15,6 +15,11 @@ namespace SignalR.Web.Hubs
             await Clients.Caller.ReceiveMessageForCallerClient(message);
         }
 
+        public async Task BroadcastMessageToOtherClients(string message)
+        {
+            await Clients.Others.ReceiveMessageForOtherClient(message);
+        }
+
         public override async Task OnConnectedAsync()
         {
             ConnectedClientsCount++;

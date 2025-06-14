@@ -2,7 +2,7 @@
     const broadcastMessageToAllClientHubMethodCall = "BroadcastMessageToAllClients"; 
     const receiveMessageForAllClientClientMethodCall = "ReceiveMessageForAllClient";
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/examplehub")
+        .withUrl("/exampleTypeSafeHub")
         .configureLogging(signalR.LogLevel.Information)
         .build();
 

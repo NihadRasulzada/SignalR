@@ -1,10 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.AspNetCore.SignalR.Client;
 using SignalR.Console;
+using System.Threading.Tasks;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         Console.WriteLine("SignalR Console Client");
 
@@ -22,6 +23,20 @@ internal class Program
             Console.WriteLine($"Received message: {product}");
         });
 
-        Console.ReadKey();
+        while (true)
+        {
+            var key = Console.ReadLine();
+
+            if (key == "exit") return;
+
+            Product product = new()
+            {
+                Id = 1,
+                Name = "Sample Product",
+                Price = 19.99m
+            };
+
+            await connection.InvokeAsync("BroadcastTypedMessageToAllClient", product);
+        }
     }
 }

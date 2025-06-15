@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dotnet-SignalR.WorkerService-ed6b656b-a643-4ace-b87c-feec979d2f65</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.17" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+	</ItemGroup>
+</Project>

@@ -109,19 +109,25 @@
         console.log("Received Message", message);
     })
 
-    function start() {
-        connection.start().then(() => {
-            console.log("Connected to the hub");
-            $("#connectionId").html(`Connection Id : ${connection.connectionId}`);
-        });
+    async function start() {
+        try {
+            await connection.start().then(() => {
+                console.log("Connected to the hub");
+                $("#connectionId").html(`Connection Id : ${connection.connectionId}`);
+            });
+        }
+        catch (err) {
+            console.error("Error while starting connection: ", err);
+            setTimeout(() => start(), 5000)
+        }
+
     }
 
-    try {
-        start();
-    }
-    catch {
-        setTimeout(() => start(), 5000)
-    }
+    connection.onclose(async () => {
+        await start();
+    });
+
+    start();
 
     const span_client_count = $("#span-connected-client-count");
     connection.on(receiveConnectedClientCountAllCLient, (count) => {

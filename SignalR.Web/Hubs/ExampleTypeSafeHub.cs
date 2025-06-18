@@ -42,6 +42,23 @@ namespace SignalR.Web.Hubs
             await Clients.Group(groupName).ReceiveMessageForGroupClients(message);
         }
 
+        public async Task BroadcastStreamDataToAllClient(IAsyncEnumerable<string> nameAsChunk)
+        {
+            await foreach (var name in nameAsChunk)
+            {
+                await Clients.All.ReceiveMessageAsStreamForAllClient(name);
+            }
+        }
+
+        public async IAsyncEnumerable<string> BroadCastFromHubToClient(int count)
+        {
+
+            foreach (var item in Enumerable.Range(1, count).ToList())
+            {
+                yield return $"{item}. data";
+            }
+        }
+
         // Adds the caller to the specified group and sends a notification to the group
         public async Task AddGroup(string groupName)
         {
